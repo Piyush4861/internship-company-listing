@@ -67,36 +67,32 @@ users.forEach(user => {
         userL2Featured[userL2Featured.length - 1].classList.toggle("hidden");
     }
 
-    // созданим массив всех юзеров
+   
     let $user = document.querySelectorAll(".user");
 
     if (user.new && user.featured) {
         $user[$user.length - 1].classList.toggle('border-left');
     }
 
-    // ----------------------------------------------------------
-    // будем создавать фильтер-кнопки в user__l1-techs блоке
-    // ----------------------------------------------------------
-
-    // созданим массив фильтер-блоков всех юзеров
+    
     const $userL1TechsAll = document.querySelectorAll('.user__l1-techs');
 
 
-    // созданим разметку для ключа role
+    
     $userL1TechsAll[techsCounter].insertAdjacentHTML('beforeend', `
         <div class="user__l2-tech ${user.role.toLowerCase()}">
             ${user.role}
         </div>
     `);
 
-    // созданим разметку для ключа level
+   
     $userL1TechsAll[techsCounter].insertAdjacentHTML('beforeend', `
         <div class="user__l2-tech ${user.level.toLowerCase()}">
             ${user.level}
         </div>
     `);
 
-    // создадим разметку для ключа languages
+    
     user.languages.forEach(lang => {
         $userL1TechsAll[techsCounter].insertAdjacentHTML('beforeend', `
             <div class="user__l2-tech ${lang.toLowerCase()}">
@@ -105,7 +101,7 @@ users.forEach(user => {
         `);  
     });
 
-    // создадим разметку для ключа tools
+    
     user.tools.forEach(tool => {
         $userL1TechsAll[techsCounter].insertAdjacentHTML('beforeend', `
             <div class="user__l2-tech ${tool.toLowerCase()}">
@@ -116,11 +112,11 @@ users.forEach(user => {
 
     techsCounter++;
 
-    // все фильтр-кнопки юзера мы добавляли в их собственный массив
+    
     usersObj[user.id] = new Array();
     usersObj[user.id].push(user.role.toLowerCase());
     usersObj[user.id].push(user.level.toLowerCase());
-    // добавляем фильтр-кнопки в массив онных
+    
     user.languages.forEach(lang => {
         usersObj[user.id].push(lang.toLowerCase());
     });
@@ -131,15 +127,13 @@ users.forEach(user => {
 });
 
 
-// --------------------------------------------------------------
-// будем слушать фильтр-кнопки, чтобы добавлять их в блок clear
-// --------------------------------------------------------------
 
-// созданим массив всех фильтр-кнопок
+
+
 const $userL2TechAll = document.querySelectorAll('.user__l2-tech');
-// сюда будем их добавлять при клике
+
 const $filtersL1Content = document.querySelector('.filters__l1-content');
-// в этом массиве храняется список классов фильтр-кнопок которые мы добавляли
+
 let filterButtonsArray = [];
 
 $userL2TechAll.forEach(filterButton => {
@@ -158,21 +152,19 @@ $userL2TechAll.forEach(filterButton => {
 
             
 
-            // ---------------------------------------------------------------------
-            // будем слушать крестики кнопок-фильтров, если клинкут, то удалим их
-            // ---------------------------------------------------------------------
+           
             document.querySelector(`.filters__cross--${filterButton.textContent.trim().toLowerCase()}`)
             .addEventListener('click', () => {
-                // если кликает на фильтр-крестик, то удаляет фильтр-кнопку по классу
+                
                 document.querySelector(`.${filterButton.textContent.trim().toLowerCase()}--filter`).remove();
-                // мы удалим эту инфу из массива, при нажатии крестика
+               
                 filterButtonsArray.splice(filterButtonsArray.indexOf(filterButton.textContent.trim().toLowerCase(), 0), 1);   
                 
-                // проверяет, если массив добавленный фильтров пустой, то:
+                
                 if (filterButtonsArray.length === 0) {
-                    // скрыть блок с фильтрами в целом
+                    
                     document.querySelector('.filters').classList.toggle('hidden');
-                    // и отобразить всех юзеров
+                  
                     document.querySelectorAll('.user').forEach(user => {
                         user.classList.remove('hidden');
                     });
@@ -200,9 +192,7 @@ $userL2TechAll.forEach(filterButton => {
             });
         }
         
-        // у каждого юзера есть своё id. и у каждого айди есть свой массив кнопок-фильтров
-        // каждый раз, когда мы добавляем новый фильтр, то мы смотрим, у каких юзеров он есть
-        // в массиве. у кого те, тех юзеров оставляем, а остальных скрываем через id
+       
         for (let key in usersObj) {
             if (!usersObj[key].includes(filterButton.textContent.trim().toLowerCase())) {
                 document.querySelector(`#user${key}`).classList.add('hidden');
@@ -214,9 +204,7 @@ $userL2TechAll.forEach(filterButton => {
 
 
 
-// ----------------------------------------------
-// при клике на кнопку clear отчистим всё
-// ----------------------------------------------
+
 
 const $filtersL1Clear = document.querySelector('.filters__l1-clear');
 $filtersL1Clear.addEventListener('click', () => {
